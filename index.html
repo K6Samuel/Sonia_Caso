@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard CI/CD - Caso Sonia</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Dashboard CI/CD - Estudio de Caso Sonia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #0d1117;
@@ -14,104 +14,177 @@
             --text-sub: #8b949e;
             --accent: #58a6ff;
             --success: #238636;
+            --warning: #d29922;
+            --code-bg: #010409;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--bg); color: var(--text-main); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        body { background-color: var(--bg); color: var(--text-main); line-height: 1.6; padding: 20px; display: flex; justify-content: center; }
         
-        .dashboard { width: 100%; max-width: 900px; display: grid; gap: 20px; }
+        .container { width: 100%; max-width: 1000px; display: grid; gap: 24px; }
         
-        .header-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center; }
-        .header-card h1 { color: var(--accent); font-size: 1.8rem; margin-bottom: 8px; }
-        .header-card p { color: var(--text-sub); font-size: 0.95rem; }
+        /* Header */
+        .hero { background: linear-gradient(135deg, #161b22 0%, #1f242c 100%); border: 1px solid var(--border); border-radius: 16px; padding: 32px; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+        .hero h1 { color: var(--accent); font-size: 2.2rem; margin-bottom: 10px; font-weight: 700; }
+        .hero p { color: var(--text-sub); font-size: 1rem; max-width: 700px; margin: 0 auto; }
 
-        .grid-status { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        
-        .status-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; }
-        .status-card h3 { font-size: 1.1rem; margin-bottom: 10px; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
-        .status-card p { color: var(--text-sub); font-size: 0.85rem; margin-bottom: 15px; line-height: 1.4; }
-        .badge-container { background: #0d1117; border: 1px solid var(--border); padding: 12px; border-radius: 8px; display: flex; justify-content: center; align-items: center; }
+        /* Grid de Estado */
+        .grid-status { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.2s; }
+        .card:hover { border-color: #8b949e; }
+        .card h3 { font-size: 1.15rem; margin-bottom: 12px; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
+        .card p { color: var(--text-sub); font-size: 0.9rem; margin-bottom: 20px; }
+        .badge-box { background: var(--code-bg); border: 1px solid var(--border); padding: 14px; border-radius: 8px; display: flex; justify-content: center; align-items: center; }
 
-        .info-section { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
-        .info-section h2 { font-size: 1.2rem; color: var(--accent); margin-bottom: 16px; }
-        
-        .pipeline-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-        .step { background: #0d1117; border: 1px solid var(--border); padding: 15px; border-radius: 8px; }
-        .step-num { font-weight: bold; color: var(--accent); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px; }
-        .step-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 5px; }
-        .step-desc { font-size: 0.8rem; color: var(--text-sub); }
+        /* Sección de Guía Interactiva para Compañeros */
+        .guide-section { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 28px; }
+        .guide-section h2 { font-size: 1.4rem; color: var(--accent); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+        .guide-section p { color: var(--text-sub); margin-bottom: 20px; font-size: 0.95rem; }
 
-        .action-area { text-align: center; margin-top: 10px; }
-        .btn { display: inline-block; background: var(--success); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: background 0.2s ease; }
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .tab-btn { background: var(--code-bg); border: 1px solid var(--border); color: var(--text-sub); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: 0.2s; }
+        .tab-btn.active, .tab-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Pasos y código */
+        .step-list { display: grid; gap: 14px; }
+        .step-item { background: var(--code-bg); border: 1px solid var(--border); padding: 16px; border-radius: 8px; }
+        .step-title { font-weight: 600; color: var(--text-main); margin-bottom: 6px; font-size: 0.95rem; }
+        .step-desc { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px; }
+        
+        code { background: #21262d; color: #a5d6ff; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 0.85rem; }
+        pre { background: #010409; border: 1px solid var(--border); padding: 12px; border-radius: 6px; overflow-x: auto; color: #7ee787; font-family: monospace; font-size: 0.85rem; margin-top: 8px; }
+
+        /* Alerta de errores */
+        .error-alert { background: rgba(210, 153, 34, 0.1); border: 1px solid var(--warning); border-radius: 8px; padding: 16px; margin-top: 15px; }
+        .error-alert h4 { color: var(--warning); margin-bottom: 6px; font-size: 0.95rem; }
+        .error-alert p { color: var(--text-sub); font-size: 0.85rem; margin: 0; }
+
+        /* Botón de Descarga */
+        .footer-action { text-align: center; padding: 10px 0; }
+        .btn { display: inline-block; background: var(--success); color: white; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 1rem; transition: background 0.2s; box-shadow: 0 4px 12px rgba(35, 134, 54, 0.3); }
         .btn:hover { background: #2ea043; }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.7rem; }
+            .tabs { flex-direction: column; }
+        }
     </style>
 </head>
 <body>
 
-<div class="dashboard">
-    <!-- Encabezado -->
-    <div class="header-card">
-        <h1>🚀 Centro de Control CI/CD</h1>
-        <p>Estudio de Caso: Automatización de Integración, Control de Calidad y Entrega Continua</p>
+<div class="container">
+    <!-- Encabezado Principal -->
+    <div class="hero">
+        <h1>🚀 Panel CI/CD - Estudio de Caso Sonia</h1>
+        <p>Plataforma automatizada de Integración Continua, Auditoría de Código y Despliegue para la colaboración en equipo.</p>
     </div>
 
-    <!-- Tarjetas de Estado (Badges) -->
+    <!-- Monitoreo en Vivo (Badges) -->
     <div class="grid-status">
-        <div class="status-card">
+        <div class="card">
             <div>
-                <h3>🔍 Control de Calidad</h3>
-                <p>Auditoría de sintaxis y detección de vulnerabilidades con GitHub Super-Linter en cada actualización.</p>
+                <h3>🔍 Auditoría (Super-Linter)</h3>
+                <p>Escáner automatizado de sintaxis y buenas prácticas en cada Pull Request.</p>
             </div>
-            <div class="badge-container">
+            <div class="badge-box">
                 <img src="https://github.com/K6Samuel/Sonia_Caso/actions/workflows/revision.yml/badge.svg" alt="Estado de Revisión">
             </div>
         </div>
 
-        <div class="status-card">
+        <div class="card">
             <div>
                 <h3>📦 Empaquetado Automático</h3>
-                <p>Generación automatizada del artefacto <code>.zip</code> compilado al integrar cambios en la rama principal.</p>
+                <p>Generación instantánea del archivo ejecutable/ZIP oficial al actualizar la rama principal.</p>
             </div>
-            <div class="badge-container">
+            <div class="badge-box">
                 <img src="https://github.com/K6Samuel/Sonia_Caso/actions/workflows/empaquetado.yml/badge.svg" alt="Estado de Empaquetado">
             </div>
         </div>
     </div>
 
-    <!-- Flujo del Pipeline -->
-    <div class="info-section">
-        <h2>🔄 Flujo de Trabajo del Pipeline</h2>
-        <div class="pipeline-steps">
-            <div class="step">
-                <div class="step-num">Paso 1</div>
-                <div class="step-title">Código en Rama</div>
-                <div class="step-desc">El desarrollador crea un Pull Request con los cambios.</div>
+    <!-- Guía Interactiva para el Equipo -->
+    <div class="guide-section">
+        <h2>👥 Guía de Colaboración y Uso para el Equipo</h2>
+        <p>¿Es tu primera vez colaborando en el repositorio grupal? Sigue las pestañas a continuación para aprender a subir tu código y detectar errores automáticamente.</p>
+
+        <!-- Pestañas interactivas -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab(event, 'paso-inicio')">1. Primeros Pasos</button>
+            <button class="tab-btn" onclick="switchTab(event, 'paso-push')">2. ¿Cómo hacer Push?</button>
+            <button class="tab-btn" onclick="switchTab(event, 'paso-errores')">3. Identificar Errores</button>
+        </div>
+
+        <!-- Contenido Tab 1 -->
+        <div id="paso-inicio" class="tab-content active">
+            <div class="step-list">
+                <div class="step-item">
+                    <div class="step-title">Paso A: Unirse al Repositorio</div>
+                    <div class="step-desc">Pídele al administrador del proyecto (Samuel) que te agregue como colaborador en GitHub (Settings > Collaborators) para tener permisos de escritura.</div>
+                </div>
+                <div class="step-item">
+                    <div class="step-title">Paso B: Clonar el Proyecto en tu PC</div>
+                    <div class="step-desc">Abre tu terminal o VS Code y clona el proyecto con el siguiente comando:</div>
+                    <pre>git clone https://github.com/K6Samuel/Sonia_Caso.git</pre>
+                </div>
             </div>
-            <div class="step">
-                <div class="step-num">Paso 2</div>
-                <div class="step-title">Super-Linter</div>
-                <div class="step-desc">Se valida la sintaxis automáticamente sin intervención humana.</div>
+        </div>
+
+        <!-- Contenido Tab 2 -->
+        <div id="paso-push" class="tab-content">
+            <div class="step-list">
+                <div class="step-item">
+                    <div class="step-title">Crea tu propia rama de trabajo</div>
+                    <div class="step-desc">Nunca programes directamente sobre <code>main</code>. Crea una rama con tu nombre:</div>
+                    <pre>git checkout -b tu-nombre-rama</pre>
+                </div>
+                <div class="step-item">
+                    <div class="step-title">Sube tus cambios al servidor</div>
+                    <div class="step-desc">Una vez modifiques o agregues tus archivos, ejecuta los comandos de envío:</div>
+                    <pre>git add .
+git commit -m "Agregando mi parte del estudio de caso"
+git push origin tu-nombre-rama</pre>
+                </div>
             </div>
-            <div class="step">
-                <div class="step-num">Paso 3</div>
-                <div class="step-title">Merge a Main</div>
-                <div class="step-desc">Si pasa la revisión, se aprueba la unión del código.</div>
+        </div>
+
+        <!-- Contenido Tab 3 -->
+        <div id="paso-errores" class="tab-content">
+            <div class="step-list">
+                <div class="step-item">
+                    <div class="step-title">¿Cómo sabe el sistema si tu código tiene errores?</div>
+                    <div class="step-desc">Cuando hagas un <em>Pull Request</em> en GitHub para unir tu rama a <code>main</code>, el robot <strong>Super-Linter</strong> revisará línea por línea tu código automáticamente.</div>
+                </div>
             </div>
-            <div class="step">
-                <div class="step-num">Paso 4</div>
-                <div class="step-title">Artefacto ZIP</div>
-                <div class="step-desc">Se empaqueta y publica la entrega final de inmediato.</div>
+            <div class="error-alert">
+                <h4>⚠️ ¿Qué pasa si encuentras una X roja (Failing)?</h4>
+                <p>Significa que hay un error de sintaxis o una mala práctica. Haz clic en <em>Details</em> dentro de los checks de GitHub para ver la línea exacta que falló, corrígela en tu PC y vuelve a hacer push.</p>
             </div>
         </div>
     </div>
 
-    <!-- Botón de Acción -->
-    <div class="action-area">
+    <!-- Botón de Descarga de Artefactos -->
+    <div class="footer-action">
         <a href="https://github.com/K6Samuel/Sonia_Caso/actions" target="_blank" class="btn">
-            📥 Ir a Descargas de Artefactos (.ZIP)
+            📦 Descargar Artefacto Oficial (.ZIP) en Vivo
         </a>
     </div>
 </div>
+
+<script>
+    function switchTab(evt, tabId) {
+        const contents = document.querySelectorAll('.tab-content');
+        contents.forEach(c => c.classList.remove('active'));
+
+        const buttons = document.querySelectorAll('.tab-btn');
+        buttons.forEach(b => b.classList.remove('active'));
+
+        document.getElementById(tabId).classList.add('active');
+        evt.currentTarget.classList.add('active');
+    }
+</script>
 
 </body>
 </html>
