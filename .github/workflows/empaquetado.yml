@@ -1,0 +1,24 @@
+name: Empaquetado Automático
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: write
+
+jobs:
+  crear-zip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+
+      - name: Generar archivo ZIP
+        run: zip -r proyecto_entregable.zip . -x "*.git*"
+
+      - name: Subir artefacto ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: Entrega-Proyecto
+          path: proyecto_entregable.zip
