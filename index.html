@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel CI/CD - Caso Sonia</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #0d1117; color: #c9d1d9; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 2rem; max-width: 600px; width: 90%; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
+        h1 { color: #58a6ff; font-size: 1.5rem; margin-top: 0; }
+        p { color: #8b949e; line-height: 1.5; }
+        .status-box { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 1rem; margin: 1.5rem 0; }
+        .status-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
+        .status-item:last-child { margin-bottom: 0; }
+        .btn { display: block; width: 100%; text-align: center; background: #238636; color: white; padding: 0.8rem; border-radius: 6px; text-decoration: none; font-weight: bold; transition: 0.2s; }
+        .btn:hover { background: #2ea043; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>🚀 Panel de Control CI/CD - Proyecto Sonia</h1>
+    <p>Plataforma automatizada de Integración y Despliegue Continuo. Monitorización de calidad de código y compilación de paquetes en tiempo real.</p>
+
+    <div class="status-box">
+        <div class="status-item">
+            <span>🔍 Auditoría de Código (Super-Linter):</span>
+            <!-- Medalla dinámica de GitHub -->
+            <img src="https://github.com/K6Samuel/Sonia_Caso/actions/workflows/revision.yml/badge.svg" alt="Estado de Revisión">
+        </div>
+        <div class="status-item">
+            <span>📦 Empaquetado Automático (ZIP):</span>
+            <!-- Medalla dinámica de GitHub -->
+            <img src="https://github.com/K6Samuel/Sonia_Caso/actions/workflows/empaquetado.yml/badge.svg" alt="Estado de Empaquetado">
+        </div>
+    </div>
+
+    <a href="https://github.com/K6Samuel/Sonia_Caso/actions" target="_blank" class="btn">
+        Descargar Último Entregable (.ZIP)
+    </a>
+</div>
+
+</body>
+</html>
