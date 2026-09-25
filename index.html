@@ -3,42 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel CI/CD - Caso Sonia</title>
+    <title>Dashboard CI/CD - Caso Sonia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #0d1117; color: #c9d1d9; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 2rem; max-width: 600px; width: 90%; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
-        h1 { color: #58a6ff; font-size: 1.5rem; margin-top: 0; }
-        p { color: #8b949e; line-height: 1.5; }
-        .status-box { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 1rem; margin: 1.5rem 0; }
-        .status-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
-        .status-item:last-child { margin-bottom: 0; }
-        .btn { display: block; width: 100%; text-align: center; background: #238636; color: white; padding: 0.8rem; border-radius: 6px; text-decoration: none; font-weight: bold; transition: 0.2s; }
+        :root {
+            --bg: #0d1117;
+            --card-bg: #161b22;
+            --border: #30363d;
+            --text-main: #c9d1d9;
+            --text-sub: #8b949e;
+            --accent: #58a6ff;
+            --success: #238636;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-main); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        
+        .dashboard { width: 100%; max-width: 900px; display: grid; gap: 20px; }
+        
+        .header-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center; }
+        .header-card h1 { color: var(--accent); font-size: 1.8rem; margin-bottom: 8px; }
+        .header-card p { color: var(--text-sub); font-size: 0.95rem; }
+
+        .grid-status { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        
+        .status-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; }
+        .status-card h3 { font-size: 1.1rem; margin-bottom: 10px; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
+        .status-card p { color: var(--text-sub); font-size: 0.85rem; margin-bottom: 15px; line-height: 1.4; }
+        .badge-container { background: #0d1117; border: 1px solid var(--border); padding: 12px; border-radius: 8px; display: flex; justify-content: center; align-items: center; }
+
+        .info-section { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+        .info-section h2 { font-size: 1.2rem; color: var(--accent); margin-bottom: 16px; }
+        
+        .pipeline-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .step { background: #0d1117; border: 1px solid var(--border); padding: 15px; border-radius: 8px; }
+        .step-num { font-weight: bold; color: var(--accent); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px; }
+        .step-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 5px; }
+        .step-desc { font-size: 0.8rem; color: var(--text-sub); }
+
+        .action-area { text-align: center; margin-top: 10px; }
+        .btn { display: inline-block; background: var(--success); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: background 0.2s ease; }
         .btn:hover { background: #2ea043; }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <h1>🚀 Panel de Control CI/CD - Proyecto Sonia</h1>
-    <p>Plataforma automatizada de Integración y Despliegue Continuo. Monitorización de calidad de código y compilación de paquetes en tiempo real.</p>
+<div class="dashboard">
+    <!-- Encabezado -->
+    <div class="header-card">
+        <h1>🚀 Centro de Control CI/CD</h1>
+        <p>Estudio de Caso: Automatización de Integración, Control de Calidad y Entrega Continua</p>
+    </div>
 
-    <div class="status-box">
-        <div class="status-item">
-            <span>🔍 Auditoría de Código (Super-Linter):</span>
-            <!-- Medalla dinámica de GitHub -->
-            <img src="https://github.com/K6Samuel/Sonia_Caso/actions/workflows/revision.yml/badge.svg" alt="Estado de Revisión">
+    <!-- Tarjetas de Estado (Badges) -->
+    <div class="grid-status">
+        <div class="status-card">
+            <div>
+                <h3>🔍 Control de Calidad</h3>
+                <p>Auditoría de sintaxis y detección de vulnerabilidades con GitHub Super-Linter en cada actualización.</p>
+            </div>
+            <div class="badge-container">
+                <img src="https://github.com/K6Samuel/Sonia_Caso/actions/workflows/revision.yml/badge.svg" alt="Estado de Revisión">
+            </div>
         </div>
-        <div class="status-item">
-            <span>📦 Empaquetado Automático (ZIP):</span>
-            <!-- Medalla dinámica de GitHub -->
-            <img src="https://github.com/K6Samuel/Sonia_Caso/actions/workflows/empaquetado.yml/badge.svg" alt="Estado de Empaquetado">
+
+        <div class="status-card">
+            <div>
+                <h3>📦 Empaquetado Automático</h3>
+                <p>Generación automatizada del artefacto <code>.zip</code> compilado al integrar cambios en la rama principal.</p>
+            </div>
+            <div class="badge-container">
+                <img src="https://github.com/K6Samuel/Sonia_Caso/actions/workflows/empaquetado.yml/badge.svg" alt="Estado de Empaquetado">
+            </div>
         </div>
     </div>
 
-    <a href="https://github.com/K6Samuel/Sonia_Caso/actions" target="_blank" class="btn">
-        Descargar Último Entregable (.ZIP)
-    </a>
+    <!-- Flujo del Pipeline -->
+    <div class="info-section">
+        <h2>🔄 Flujo de Trabajo del Pipeline</h2>
+        <div class="pipeline-steps">
+            <div class="step">
+                <div class="step-num">Paso 1</div>
+                <div class="step-title">Código en Rama</div>
+                <div class="step-desc">El desarrollador crea un Pull Request con los cambios.</div>
+            </div>
+            <div class="step">
+                <div class="step-num">Paso 2</div>
+                <div class="step-title">Super-Linter</div>
+                <div class="step-desc">Se valida la sintaxis automáticamente sin intervención humana.</div>
+            </div>
+            <div class="step">
+                <div class="step-num">Paso 3</div>
+                <div class="step-title">Merge a Main</div>
+                <div class="step-desc">Si pasa la revisión, se aprueba la unión del código.</div>
+            </div>
+            <div class="step">
+                <div class="step-num">Paso 4</div>
+                <div class="step-title">Artefacto ZIP</div>
+                <div class="step-desc">Se empaqueta y publica la entrega final de inmediato.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón de Acción -->
+    <div class="action-area">
+        <a href="https://github.com/K6Samuel/Sonia_Caso/actions" target="_blank" class="btn">
+            📥 Ir a Descargas de Artefactos (.ZIP)
+        </a>
+    </div>
 </div>
 
 </body>
