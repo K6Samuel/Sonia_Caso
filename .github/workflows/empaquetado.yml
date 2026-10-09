@@ -2,23 +2,22 @@ name: Empaquetado Automático
 
 on:
   push:
-    branches: [ "main" ]
-
-permissions:
-  contents: write
+    branches: [ main ]
 
 jobs:
-  crear-zip:
+  build:
+    name: Comprimir y Empaquetar
     runs-on: ubuntu-latest
     steps:
-      - name: Descargar codigo
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Generar archivo ZIP
-        run: zip -r proyecto_entregable.zip . -x "*.git*"
+      - name: Comprimir proyecto en ZIP
+        run: |
+          zip -r proyecto-html.zip . -x ".git*" ".github*"
 
-      - name: Subir artefacto ZIP
+      - name: Subir artefacto
         uses: actions/upload-artifact@v4
         with:
-          name: Entrega-Proyecto
-          path: proyecto_entregable.zip
+          name: codigo-unificado-html
+          path: proyecto-html.zip
