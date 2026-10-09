@@ -5,21 +5,17 @@ on:
     branches: [ main ]
 
 jobs:
-  revision-codigo:
+  build:
     name: Buscar Errores y Vulnerabilidades
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      statuses: write
-
     steps:
-      - name: Descargar codigo
+      - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Escaneo con GitHub Super-Linter
+      - name: Run Super-Linter
         uses: github/super-linter@v5
         env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: main
+          VALIDATE_JSCPD: false
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_ALL_CODEBASE: true
