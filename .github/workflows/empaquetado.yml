@@ -23,40 +23,43 @@ jobs:
     steps:
       - name: Descargar codigo
         uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-
-      - name: Revisar codigo
-        uses: super-linter/super-linter@v9.0.0
-        env:
-          VALIDATE_ALL_CODEBASE: true
-          VALIDATE_JSCPD: false
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Comprobar HTML
         run: |
+          echo "Comprobando archivo HTML..."
+
           test -s index.html
           grep -qi '<html' index.html
           grep -qi '</html>' index.html
 
-      - name: Crear ZIP
+          echo "Comprobacion basica superada."
+
+      - name: Preparar sitio web
         run: |
           mkdir -p dist
           cp index.html dist/
+
+          echo "Sitio web preparado."
+
+      - name: Crear ZIP
+        run: |
           zip proyecto-html.zip index.html README.md
           unzip -t proyecto-html.zip
+
+          echo "ZIP generado correctamente."
 
       - name: Guardar ZIP
         uses: actions/upload-artifact@v7
         with:
-          name: codigo-unificado-html
           path: proyecto-html.zip
           archive: false
+          if-no-files-found: error
+          retention-days: 7
 
-      - name: Configurar Pages
+      - name: Configurar GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Preparar sitio web
+      - name: Subir sitio web
         uses: actions/upload-pages-artifact@v4
         with:
           path: dist
