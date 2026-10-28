@@ -1,23 +1,76 @@
-name: Empaquetado Automático
+
+name: Empaquetado y Despliegue Automatico
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
   build:
-    name: Comprimir y Empaquetar
+    name: Validar y Empaquetar
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Descargar codigo
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
-      - name: Comprimir proyecto en ZIP
+      - name: Revisar codigo
+        uses: super-linter/super-linter@v9.0.0
+        env:
+          VALIDATE_ALL_CODEBASE: true
+          VALIDATE_JSCPD: false
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Comprobar HTML
         run: |
-          zip -r proyecto-html.zip . -x ".git*" ".github*" "index-dashboard.html"
+          test -s index.html
+          grep -qi '<html' index.html
+          grep -qi '</html>' index.html
 
-      - name: Subir artefacto
-        uses: actions/upload-artifact@v4
+      - name: Crear ZIP
+        run: |
+          mkdir -p dist
+          cp index.html dist/
+          zip proyecto-html.zip index.html README.md
+          unzip -t proyecto-html.zip
+
+      - name: Guardar ZIP
+        uses: actions/upload-artifact@v7
         with:
           name: codigo-unificado-html
           path: proyecto-html.zip
+          archive: false
+
+      - name: Configurar Pages
+        uses: actions/configure-pages@v5
+
+      - name: Preparar sitio web
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  deploy:
+    name: Publicar Pagina
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Desplegar sitio
+        id: deployment
+        uses: actions/deploy-pages@v4
